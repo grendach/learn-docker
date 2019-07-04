@@ -1,0 +1,97 @@
+#+theme=black
+
+Docker та його мережі
+18 Серпня 2019
+
+[[https://grendach.github.io/][Дмитро Грендач]]
+Інженер в EAT.CH
+
+Слайди тут: [[https://github.com/grendach/learn-docker.git]]
+
+
+* Зміст
+.image images/logo1.png 250 500
+1. Що ж таке Docker ?
+2. Як працює Docker
+3. Цілі та значення мережі в Docker.
+4. Модель контейнерної мережі (CNM)
+5. Мережеві драйвери
+6. Демонтрстрація
+7. Питання/Відповіді
+
+
+* 1. Що ж таке Docker ?
+.image images/WhatIsDocker.png 350 500
+Docker це платформа з відкритим кодом для *розробки*, *доставки* і *запуску* додатків. 
+Docker дозволяє користувачу відокремити свої розроблені додатки та програми від серверної інфраструктури за допомогою КОНТЕЙНЕРІВ.
+Це значно пришвидшує і зпрощує механізм розробки додатків.
+
+
+* 2. Як працює Docker
+Перед розглядом мережевих компонентів, давайте розглянемо в загальному як принцює Docker.
+
+.image images/DockerNetworking.png 250 550
+
+*Мережа* в Docker забезпечує можливість спілкування між собою і з зовнішнім світом всіх контейнерів в залежності від потреб користувача.
+
+
+* 3. Цілі та значення мережі в Docker.
+.image images/Goals.png 400 800
+Для забезпечення цих всих цілей, Docker використовує так звану 
+Модель Контейнерної Мережі (*Container* *Network* *Model*).
+
+
+* 4. Модель Контейнерної Мережі
+.image images/cnm.png 400 800
+*Модель* *Контейнерної* *Мережі* *(CNM)* стандартизує поняття і механізми які потрібні для поєднання контейнерів та управління ними з використанням мережевих драйверів. 
+
+
+* 
+- *Мережевий* *Контроллер*: Provides the entry-point into Libnetwork that exposes simple APIs for Docker Engine to allocate and manage networks. Since Libnetwork supports multiple inbuilt and remote drivers, Network Controller enables users to attach a particular driver to a given network.
+- *Драйвер*: Owns the network and is responsible for managing the network by having multiple drivers participating to satisfy various use-cases and deployment scenarios.
+- *Мережа*: Provides connectivity between a group of endpoints that belong to the same network and isolate from the rest. So, whenever a network is created or updated, the corresponding Driver will be notified of the event.
+- *Точка* *Взаємодії*: Забезпечує поєднання між сервісами які доступні "на зовні" контейнера 
+- *Sandbox*: Створюється кожного разу коли користувач утворює точку взаємодії в мережі
+
+
+* 5. Network Drivers
+There are mainly 5 network drivers: 
+- *Bridge*
+- *Host*
+- *None*
+- *Overlay*
+- *Macvlan*
+Lets look on each of them ...
+
+* Bridge
+.image images/bridge.png 300 300
+- Private default internal network created by docker on the host. 
+- All containers get an internal IP address and these containers can access each other. 
+- Usually used when your applications run in standalone containers that need to communicate.
+
+* Host
+.image images/host.png 300 300
+- This driver removes the network isolation between the docker host.
+- Docker containers use the host’s networking directly.
+- *NOT* *POSSIBLE* to run multiple web containers on the same *<host:port>* because *<port>* is now common to all containers in the host network.
+
+* None
+.image images/None.png 300 300
+- Containers are not attached to any network.
+- Containers do not have any access to the external network or other containers.
+- This network is completely disable the networking stack on a container and only create a *loopback* *device*.
+
+* Overlay
+.image images/overlay.png 300 600
+- Creates an internal private network that spans across all the nodes participating in the cluster.
+- Overlay networks allow communication between a service and a standalone container, or between two standalone containers on different Docker Daemons.
+
+* Macvlan
+.image images/macVlan.png 300 500
+- Allows you to assign a MAC address to a container, making it appear as a physical device on your network.
+- Docker daemon routes traffic to containers by their MAC addresses.
+- Best choice to be directly connected to the physical network, rather than routed through the Docker host’s network stack.
+
+* 6. Hands-On
+
+* 7 Q&A

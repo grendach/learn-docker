@@ -1,0 +1,99 @@
+#+theme=black
+
+Docker and his Networking
+18 Aug 2019
+
+[[https://grendach.github.io/][Dmytro Grendach]]
+DevOps Engineer at EAT.CH
+
+Slides are here: [[https://github.com/grendach/learn-docker.git]]
+
+
+* Agenda
+.image images/logo1.png 250 500
+1. What is Docker?
+2. Docker workflow
+3. Goals of Docker Networking
+4. Container Network Model
+5. Network Drivers
+6. Hands-On
+7. Q&A
+
+
+* 1. What is Docker?
+.image images/WhatIsDocker.png 350 500
+Docker in simple terms is an open platform for *developing*, *shipping*,
+and *running* applications, enabling the user to *SEPARATE* *APPLICATIONS*
+from infrastructures with the help of *containers* to deliver software quickly.
+
+
+
+* 2. Docker workflow
+Before Networking let's look into workflow of Docker.
+
+.image images/DockerNetworking.png 250 550
+
+*Docker* *Networking* make possible that all the isolated containers communicate with each other in various situations to perform the required actions.
+
+
+
+* 3. Goals of Docker Networking
+.image images/Goals.png 400 800
+To enable all theese goals, you need something known as the *Container* *Network* *Model.*
+
+
+
+* 4. Container Network Model(CNM)
+.image images/cnm.png 400 800
+*Container* *Network* *Model* *(CNM)* standardizes the steps required to provide networking for containers using multiple network drivers.
+
+
+* 
+- *Network* *Controller*: Provides the entry-point into Libnetwork that exposes simple APIs for Docker Engine to allocate and manage networks. Since Libnetwork supports multiple inbuilt and remote drivers, Network Controller enables users to attach a particular driver to a given network.
+- *Driver*: Owns the network and is responsible for managing the network by having multiple drivers participating to satisfy various use-cases and deployment scenarios.
+- *Network*: Provides connectivity between a group of endpoints that belong to the same network and isolate from the rest. So, whenever a network is created or updated, the corresponding Driver will be notified of the event.
+- *Endpoint*: Provides the connectivity for services exposed by a container in a network with other services provided by other containers in the network. Endpoints are: (IP-address, MAC-address, routes, DNS).
+- *Sandbox*: Created when users request to create an endpoint on a network.
+
+
+* 5. Network Drivers
+There are mainly 5 network drivers: 
+- *Bridge*
+- *Host*
+- *None*
+- *Overlay*
+- *Macvlan*
+Lets look on each of them ...
+
+* Bridge
+.image images/bridge.png 300 300
+- Private default internal network created by docker on the host. 
+- All containers get an internal IP address and these containers can access each other. 
+- Usually used when your applications run in standalone containers that need to communicate.
+
+* Host
+.image images/host.png 300 300
+- This driver removes the network isolation between the docker host.
+- Docker containers use the host’s networking directly.
+- *NOT* *POSSIBLE* to run multiple web containers on the same *<host:port>* because *<port>* is now common to all containers in the host network.
+
+* None
+.image images/None.png 300 300
+- Containers are not attached to any network.
+- Containers do not have any access to the external network or other containers.
+- This network is completely disable the networking stack on a container and only create a *loopback* *device*.
+
+* Overlay
+.image images/overlay.png 300 600
+- Creates an internal private network that spans across all the nodes participating in the cluster.
+- Overlay networks allow communication between a service and a standalone container, or between two standalone containers on different Docker Daemons.
+
+* Macvlan
+.image images/macVlan.png 300 500
+- Allows you to assign a MAC address to a container, making it appear as a physical device on your network.
+- Docker daemon routes traffic to containers by their MAC addresses.
+- Best choice to be directly connected to the physical network, rather than routed through the Docker host’s network stack.
+
+* 6. Hands-On
+
+* 7 Q&A
