@@ -16,7 +16,7 @@ Slides are here: [[https://github.com/grendach/learn-docker.git]]
 3. Goals of Docker Networking
 4. Container Network Model
 5. Network Drivers
-6. Hands-On
+6. Demo
 7. Q&A
 
 
@@ -96,4 +96,4 @@ Lets look on each of them ...
 
 * 6. Hands-On
 
-* 7 Q&A
+* 7 Questions and ... maybe answers :)
