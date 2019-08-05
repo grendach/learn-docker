@@ -100,11 +100,37 @@ Docker використовує 5 видів мережевих драйвері
 .play -numbers demo-app/src/main.go
 
 
-* 
-Запуск нашої програми в Docker контейнері.
-Dockerfile для нашого додатку
+* Dockerfile для нашого додатку
 
 .code demo-app/Dockerfile
+
+* Перевірка типу мереж:
+
+$ docker network ls
+NETWORK ID          NAME                DRIVER
+7fca4eb8c647        bridge              bridge
+9f904ee27bf5        none                null
+cf03ee007fb4        host                host
+
+* Збудуємо докер образ:
+
+docker build -t test:1111 .
+
+* Запуск контейнера в режимі Мосту:
+
+docker run -p 3030:3001 -it test:1111
+
+* Запуск в режимі Ніякому
+
+docker run --network=none -p 3060:3001 test:2222
+
+* Запуск в режимі хоста
+
+docker run --network=host  test:2222
+
+Більше інформації тут:
+https://docs.docker.com/v17.09/engine/userguide/networking/
+
 
 
 * 7 Питання і ... можливо відповіді :)
