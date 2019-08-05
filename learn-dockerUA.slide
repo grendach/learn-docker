@@ -95,4 +95,16 @@ Docker використовує 5 видів мережевих драйвері
 
 * 6. Демо
 
+* WEB-додаток на Golang
+
+.play -numbers demo-app/src/main.go
+
+
+* 
+Запуск нашої програми в Docker контейнері.
+Dockerfile для нашого додатку
+
+.code demo-app/Dockerfile
+
+
 * 7 Питання і ... можливо відповіді :)
