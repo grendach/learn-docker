@@ -1,6 +1,6 @@
 #+theme=black
 
-Docker and his Networking
+Docker.Docker-compose.Docker Networking.
 18 Aug 2019
 
 [[https://grendach.github.io/][Dmytro Grendach]]
@@ -10,14 +10,16 @@ Slides are here: [[https://github.com/grendach/learn-docker.git]]
 
 
 * Agenda
-.image images/logo1.png 250 500
+.image images/logo1.png 200 400
 1. What is Docker?
 2. Docker workflow
-3. Goals of Docker Networking
-4. Container Network Model
-5. Network Drivers
-6. Demo
-7. Q&A
+3. Dockerfile
+4. Docker-compose
+5. Goals of Docker
+6. Container Network Model
+7. Network Drivers
+8. Demo
+9. Q&A
 
 
 * 1. What is Docker?
@@ -29,21 +31,27 @@ from infrastructures with the help of *containers* to deliver software quickly.
 
 
 * 2. Docker workflow
-Before Networking let's look into workflow of Docker.
 
 .image images/DockerNetworking.png 250 550
 
 *Docker* *Networking* make possible that all the isolated containers communicate with each other in various situations to perform the required actions.
 
+* 3. Dockerfile
 
-* 3. Goals of Docker Networking
+.code -numbers demo-app-python/app.py
+
+.code demo-app-python/Dockerfile
+
+* 4. Docker-compose 
+- tool for defining and running multi-container Docker applications. 
+- you use a YAML file to configure your application’s services. 
+- with a single command, you create and start all the services from your configuration.
+
+.code demo-app-python/docker-compose.yml
+
+* . Goals of Docker
 .image images/Goals.png 400 800
 To enable all theese goals, you need something known as the *Container* *Network* *Model.*
-
-* 4. Container Network Model(CNM)
-.image images/cnm.png 400 800
-*Container* *Network* *Model* *(CNM)* standardizes the steps required to provide networking for containers using multiple network drivers.
-
 
 * 5. Network Drivers
 There are mainly 5 network drivers: 
@@ -82,12 +90,6 @@ Lets look on  first three of them ...
 - *Host*
 - *None*
 
-* WEB-app on Golang
-
-.play -numbers demo-app/src/main.go
-
-* Dockerfile for out WEB-app
-.code demo-app/Dockerfile
 
 Let's create and run our container using three tipes of Docker network:
 

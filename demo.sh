@@ -1,9 +1,5 @@
 # Show docker networks
 docker network ls
-# NETWORK ID          NAME                DRIVER
-# 7fca4eb8c647        bridge              bridge
-# 9f904ee27bf5        none                null
-# cf03ee007fb4        host                host
 
 # Build docker image
 docker build -t demo:demo .
@@ -21,3 +17,8 @@ docker run  --network=host  demo:demo
 #Check docker network config
 docker exec 3b2b5299d17c ip route
 docker exec 3b2b5299d17c ip link show
+
+# To delete all containers including its volumes use,
+docker rm -vf $(docker ps -a -q)
+# To delete all the images
+docker rmi -f $(docker images -a -q)
